@@ -15,6 +15,12 @@ const typeDefs = `
     email: String
   }
 
+  type Vote {
+    id: ID!
+    user: User!
+    link: Link!
+  }
+
   type SinginPayload {
     token: String
     user: User
@@ -26,6 +32,7 @@ const typeDefs = `
 
   type Mutation {
     createLink(url: String!, description: String!): Link
+    createVote(linkId: ID!): Vote
     createUser(name: String!, authProvider: AuthProviderSingupData!): User
     singinUser(email: AUTH_PROVIDER_EMAIL): SinginPayload!
   }
