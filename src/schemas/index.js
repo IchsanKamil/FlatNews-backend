@@ -14,6 +14,11 @@ const typeDefs = `
     email: String
   }
 
+  type SinginPayload {
+    token: String
+    user: User
+  }
+
   type Query {
     allLinks: [Link!]!
   }
@@ -21,6 +26,7 @@ const typeDefs = `
   type Mutation {
     createLink(url: String!, description: String!): Link
     createUser(name: String!, authProvider: AuthProviderSingupData!): User
+    singinUser(email: AUTH_PROVIDER_EMAIL): SinginPayload!
   }
 
   input AuthProviderSingupData {
