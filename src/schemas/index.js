@@ -7,6 +7,7 @@ const typeDefs = `
     url: String!
     description: String!
     postedBy: User
+    votes: [Vote!]!
   }
 
   type User {
