@@ -5,6 +5,7 @@ const schema = require('./schemas')
 const connectMongo = require('./mongo/connector')
 const { authenticate } = require('./authentication')
 const buildDataloaders = require('./dataloaders')
+const formatError = require('./formatError')
 
 const start = async () => {
 
@@ -20,6 +21,7 @@ const start = async () => {
         mongo,
         user
       },
+      formatError,
       schema
     }
   }

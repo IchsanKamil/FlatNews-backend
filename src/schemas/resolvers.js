@@ -1,11 +1,18 @@
 const { ObjectID } = require('mongodb')
 const { URL } = require('url')
 
+class ValidationError extends Error {
+  constructor(message, field) {
+    super(message)
+    this.field = field
+  }
+}
+
 const assertValidLink = ({url}) => {
   try {
     new URL(url)
-  } catch (err) {
-    throw new Error('Link validation error: invalid url.')
+  } catch (error) {
+    throw new ValidationError('Link validation error: invalid url.', 'url')
   }
 }
 
