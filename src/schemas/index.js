@@ -30,7 +30,7 @@ const typeDefs = `
   }
 
   type Query {
-    allLinks(filter: LinkFilter): [Link!]!
+    allLinks(filter: LinkFilter, first: Int, skip: Int): [Link!]!
   }
 
   input LinkFilter {
