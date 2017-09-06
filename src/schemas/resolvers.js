@@ -1,4 +1,13 @@
 const { ObjectID } = require('mongodb')
+const { URL } = require('url')
+
+const assertValidLink = ({url}) => {
+  try {
+    new URL(url)
+  } catch (err) {
+    throw new Error('Link validation error: invalid url.')
+  }
+}
 
 module.exports = {
   Query: {
@@ -8,6 +17,7 @@ module.exports = {
   },
   Mutation: {
     createLink: async (root, data, {mongo: {Links}, user}) => {
+      assertValidLink(data)
       const newLink = Object.assign({postedById: user && user._id}, data)
       const response = await Links.insert(newLink)
       return Object.assign({id: response.insertedIds[0]}, newLink)
