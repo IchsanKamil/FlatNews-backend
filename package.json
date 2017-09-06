@@ -1,14 +1,13 @@
 {
-  "name": "FlatNews-backend",
+  "name": "flatnews-backend",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "nodemon ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Kevin Hermawan",
   "license": "ISC",
   "dependencies": {
     "apollo-server-express": "^1.0.4",
@@ -24,5 +23,17 @@
   },
   "devDependencies": {
     "nodemon": "^1.12.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinhermawan/FlatNews-backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kevinhermawan/FlatNews-backend/issues"
+  },
+  "engines": {
+    "node": "8.4.0"
+  },
+  "homepage": "https://github.com/kevinhermawan/FlatNews-backend#readme",
+  "description": ""
 }
