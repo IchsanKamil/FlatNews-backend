@@ -6,6 +6,9 @@ const connectMongo = require('./mongo/connector')
 const { authenticate } = require('./authentication')
 const buildDataloaders = require('./dataloaders')
 const formatError = require('./formatError')
+const {execute, subscribe} = require('graphql')
+const {createServer} = require('http')
+const {SubscriptionServer} = require('subscriptions-transport-ws')
 
 const start = async () => {
 
@@ -30,10 +33,16 @@ const start = async () => {
 
   app.use('/graphiql', graphiqlExpress({
     endpointURL: '/graphql',
-    passHeader: `'Authorization': 'bearer token-kevinhermawanx@gmail.com'`
+    passHeader: `'Authorization': 'bearer token-kevinhermawanx@gmail.com'`,
+    subscriptionsEndpoint: `ws://localhost:${PORT}/subscriptions`,
   }))
 
-  app.listen(PORT, () => {
+  const server = createServer(app)
+  server.listen(PORT, () => {
+    SubscriptionServer.create(
+      {execute, subscribe, schema},
+      {server, path: '/subscriptions'}
+    )
     console.log(`FlatNews GraphQL Server running on localhost:${PORT}`)
   })
 }

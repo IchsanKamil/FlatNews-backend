@@ -1,5 +1,8 @@
 const { ObjectID } = require('mongodb')
 const { URL } = require('url')
+const { PubSub, withFilter } = require('graphql-subscriptions')
+
+const pubsub = new PubSub()
 
 class ValidationError extends Error {
   constructor(message, field) {
@@ -22,12 +25,19 @@ module.exports = {
       return await Links.find({}).toArray()
     }
   },
+  Subscription: {
+    Link: {
+      subscribe: () => pubsub.asyncIterator('Link')
+    }
+  },
   Mutation: {
     createLink: async (root, data, {mongo: {Links}, user}) => {
       assertValidLink(data)
       const newLink = Object.assign({postedById: user && user._id}, data)
       const response = await Links.insert(newLink)
-      return Object.assign({id: response.insertedIds[0]}, newLink)
+      newLink.id = response.insertedIds[0]
+      pubsub.publish('Link', {Link: {mutation: 'CREATED', node: newLink}})
+      return newLink
     },
     createVote: async (root, data, {mongo: {Votes}, user}) => {
       const newVote = {
